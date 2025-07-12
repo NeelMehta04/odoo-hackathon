@@ -1,0 +1,83 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-container {
+  background-color: #666;
+  color: white;
+  border-radius: 20px;
+  padding: 40px 60px;
+  width: 90%;
+  max-width: 1100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+  gap: 40px;
+}
+
+/* LEFT SECTION */
+.profile-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-info h1 {
+  font-size: 32px;
+  margin: 0;
+}
+
+.profile-info p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.profile-info strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.profile-info ul {
+  padding-left: 20px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+/* BUTTON */
+.request-btn {
+  background-color: #003bbb;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+/* RIGHT PROFILE PIC */
+.profile-photo-wrapper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-photo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 4px solid white;
+  object-fit: cover;
+}
