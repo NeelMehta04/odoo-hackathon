@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // ✅ Add this line
 import '../styles/login.css';
 
 const Login = () => {
@@ -46,8 +47,10 @@ const Login = () => {
         />
         <button type="submit">Log In</button>
         {loginStatus && <p>{loginStatus}</p>}
+
+        {/* ✅ Use Link instead of <a> */}
         <p className="signup-text">
-          Don't have an account? <a href="/signup">Sign up</a>
+          Don't have an account? <Link to="/signup">Sign up</Link>
         </p>
       </form>
     </div>
