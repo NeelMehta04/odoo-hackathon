@@ -1,46 +1,57 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import '../styles/login.css';
 
-export default function Login() {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const [loginStatus, setLoginStatus] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
-      const res = await axios.post('http://localhost:3000/api/auth/login', { email, password });
-      alert('Login successful');
-      localStorage.setItem('user', JSON.stringify(res.data.user));
-      navigate('/');
-    } catch (err) {
-      alert('Login failed: ' + err.response?.data?.error || err.message);
+      const response = await fetch(`http://localhost:8080/api/login?email=${email}&password=${password}`);
+      const result = await response.json();
+
+      if (result.valid) {
+        setLoginStatus('Login successful!');
+        // You can use useNavigate() here to redirect
+      } else {
+        setLoginStatus('Invalid credentials');
+      }
+
+    } catch (error) {
+      console.error('Login failed:', error);
+      setLoginStatus('Login failed. Please try again.');
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
-      <form onSubmit={handleLogin} className="space-y-3">
-        <input
-          type="email"
+    <div className="login-container">
+      <form className="login-box" onSubmit={handleLogin}>
+        <h2>Login</h2>
+        <input 
+          type="email" 
+          placeholder="Email" 
           value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Email"
-          className="input input-bordered w-full"
+          onChange={(e) => setEmail(e.target.value)} 
           required
         />
-        <input
-          type="password"
+        <input 
+          type="password" 
+          placeholder="Password" 
           value={password}
-          onChange={e => setPassword(e.target.value)}
-          placeholder="Password"
-          className="input input-bordered w-full"
+          onChange={(e) => setPassword(e.target.value)} 
           required
         />
-        <button type="submit" className="btn w-full">Login</button>
+        <button type="submit">Log In</button>
+        {loginStatus && <p>{loginStatus}</p>}
+        <p className="signup-text">
+          Don't have an account? <a href="/signup">Sign up</a>
+        </p>
       </form>
     </div>
   );
-}
+};
+
+export default Login;
