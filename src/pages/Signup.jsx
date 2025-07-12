@@ -1,160 +1,141 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/auth.css';
+import '../styles/auth.css'; // Adjust the path if needed
 
-const Signup = () => {
+export default function UserProfile() {
   const [formData, setFormData] = useState({
-    location: '',
+    name: '',
     email: '',
     contactNumber: '',
-    password: '',
-    profilePic: null,
-    visibility: 'true',
-    skillsOffered: '',
-    skillsWanted: '',
+    skillsLearnt: [],
+    skillsWannaLearn: [],
+    imageData: null,
+    visibility: true,
   });
 
-  const [signupStatus, setSignupStatus] = useState('');
+  const skillOptions = ['React', 'Node', 'Python', 'Design', 'JavaScript', 'Manager'];
 
-  const skillOptions = [
-    'Graphic Design',
-    'Video Editing',
-    'Photoshop',
-    'Python',
-    'JavaScript',
-    'Project Management',
-  ];
-
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleFileChange = (e) => {
-    setFormData(prev => ({ ...prev, profilePic: e.target.files[0] }));
-  };
-
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      data.append(key, value);
+  const handleSkillToggle = (type, skill) => {
+    const key = type === 'learnt' ? 'skillsLearnt' : 'skillsWannaLearn';
+    setFormData(prev => {
+      const current = prev[key];
+      const updated = current.includes(skill)
+        ? current.filter(s => s !== skill)
+        : [...current, skill];
+      return { ...prev, [key]: updated };
     });
+  };
 
-    try {
-      const response = await fetch('http://localhost:8080/api/signup', {
-        method: 'POST',
-        body: data,
-      });
-      const result = await response.json();
+  const handleImageChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      imageData: e.target.files[0]
+    }));
+  };
 
-      if (result.success) {
-        setSignupStatus('Signup successful!');
-      } else {
-        setSignupStatus('Signup failed. Please try again.');
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-      setSignupStatus('Signup failed. Please try again.');
-    }
+  const handleVisibilityChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      visibility: e.target.value === 'true'
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+
+    // TODO: Add backend call here
+
+    alert('Signup Successful!');
   };
 
   return (
     <div className="login-container">
-      <form className="login-box" onSubmit={handleSignup}>
+      <form className="login-box" onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
 
         <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={formData.location}
-          onChange={handleInputChange}
-          required
-        />
-        <label>Profile Picture: </label>
-        <input
-          type="file"
-          name="profilePic"
-          onChange={handleFileChange}
-          accept="image/*"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleChange}
           required
         />
 
         <input
-          type="text"
-          name="contactNumber"
-          placeholder="Contact Number"
-          value={formData.contactNumber}
-          onChange={handleInputChange}
-          required
-        />
-
-        <input
-          type="email"
           name="email"
+          type="email"
           placeholder="Email"
           value={formData.email}
-          onChange={handleInputChange}
+          onChange={handleChange}
           required
         />
 
         <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleInputChange}
+          name="contactNumber"
+          type="tel"
+          placeholder="Contact Number"
+          value={formData.contactNumber}
+          onChange={handleChange}
           required
         />
 
-        <select
-          name="skillsOffered"
-          value={formData.skillsOffered}
-          onChange={handleInputChange}
-          required
-          style={{ padding: '12px', borderRadius: '8px', fontSize: '16px' }}
-        >
-          <option value="">Select a Skill You Offer</option>
-          {skillOptions.map(skill => (
-            <option key={skill} value={skill}>{skill}</option>
+        <label>Select Skills You Have:</label>
+        <div className="skill-list">
+          {skillOptions.map((skill) => (
+            <span
+              key={`learnt-${skill}`}
+              className={`skill-tag ${formData.skillsLearnt.includes(skill) ? 'selected' : ''}`}
+              onClick={() => handleSkillToggle('learnt', skill)}
+            >
+              {skill}
+            </span>
           ))}
-        </select>
+        </div>
 
-        <select
-          name="skillsWanted"
-          value={formData.skillsWanted}
-          onChange={handleInputChange}
-          required
-          style={{ padding: '12px', borderRadius: '8px', fontSize: '16px' }}
-        >
-          <option value="">Select a Skill You Want</option>
-          {skillOptions.map(skill => (
-            <option key={skill} value={skill}>{skill}</option>
+        <label>Select Skills You Want to Learn:</label>
+        <div className="skill-list">
+          {skillOptions.map((skill) => (
+            <span
+              key={`wanna-${skill}`}
+              className={`skill-tag ${formData.skillsWannaLearn.includes(skill) ? 'selected' : ''}`}
+              onClick={() => handleSkillToggle('wanna', skill)}
+            >
+              {skill}
+            </span>
           ))}
-        </select>
-        <label>Visibility: </label>
-        <select
-          name="visibility"
-          value={formData.visibility}
-          onChange={handleInputChange}
-          required
-          style={{ padding: '12px', borderRadius: '8px', fontSize: '16px' }}
-        >
+        </div>
+
+        <label>Upload Image:</label>
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+
+        {formData.imageData && (
+          <img
+            src={URL.createObjectURL(formData.imageData)}
+            alt="Preview"
+            style={{ width: '100px', height: '100px', objectFit: 'cover', marginTop: '10px' }}
+          />
+        )}
+
+        <label>Profile Status: </label>
+        <select value={formData.visibility ? 'true' : 'false'} onChange={handleVisibilityChange}>
           <option value="true">Public</option>
           <option value="false">Private</option>
         </select>
 
         <button type="submit">Sign Up</button>
 
-        {signupStatus && <p>{signupStatus}</p>}
-
         <p className="signup-text">
-          Already have an account? <Link to="/login">Log in</Link>
+          Already have an account? <a href="/login">Login</a>
         </p>
       </form>
     </div>
   );
-};
-
-export default Signup;
+}

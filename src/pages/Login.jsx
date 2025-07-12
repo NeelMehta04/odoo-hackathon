@@ -11,19 +11,28 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8080/api/login?email=${email}&password=${password}`);
-      const result = await response.json();
+      const response = await fetch("http://localhost:8080/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          email,
+          password,
+        }),
+      });
 
-      if (result.valid) {
-        setLoginStatus('Login successful!');
-        // You can use useNavigate() here to redirect
+      const text = await response.text(); 
+
+      if (response.ok) {
+        setLoginStatus("Login successful!");
       } else {
-        setLoginStatus('Invalid credentials');
+        setLoginStatus(text || "Invalid credentials");
       }
 
     } catch (error) {
-      console.error('Login failed:', error);
-      setLoginStatus('Login failed. Please try again.');
+      console.error("Login failed:", error);
+      setLoginStatus("Login failed. Please try again.");
     }
   };
 

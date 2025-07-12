@@ -1,0 +1,118 @@
+/* Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Popup Card */
+.popup-card {
+  background-color: #333;
+  color: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Close Button */
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Dropdowns & Input */
+.popup-card select,
+.popup-card textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background-color: #222;
+  color: white;
+  font-size: 14px;
+  resize: none;
+}
+
+/* Submit Button */
+.popup-card button.submit-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.popup-card button.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: #333;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  color: white;
+}
+
+.modal-box textarea,
+.modal-box select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 6px;
+  background-color: #444;
+  color: white;
+  border: none;
+}
+
+.modal-box button {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.modal-box .close-btn {
+  background-color: #555;
+  margin-left: 10px;
+}

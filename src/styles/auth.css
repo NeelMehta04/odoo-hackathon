@@ -67,3 +67,25 @@ body,html,#root {
 .signup-text a:hover {
   text-decoration: underline;
 }
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.skill-tag {
+  padding: 8px 12px;
+  border-radius: 20px;
+  background-color: #444;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.skill-tag.selected {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}

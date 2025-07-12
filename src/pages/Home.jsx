@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import RequestPopup from './Request';
 import './Home.css';
 
 export default function Home() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Dummy data
     setUsers([
       {
         id: 1,
@@ -27,13 +29,24 @@ export default function Home() {
     ]);
   }, []);
 
-  const handleRequest = () => {
-    const isLoggedIn = localStorage.getItem('loggedIn');
-    if (isLoggedIn === 'true') {
-      navigate('/request');
-    } else {
-      navigate('/login');
-    }
+  const handleRequestClick = (user) => {
+
+    setSelectedUser(user);
+    setShowPopup(true);
+    // const isLoggedIn = localStorage.getItem('loggedIn');
+    // if (isLoggedIn === 'true') {
+      
+    // } else {
+    //   navigate('/login');
+    // }
+  };
+
+  const handleRequestSubmit = (data) => {
+    console.log('Submitted request:', {
+      to: selectedUser?.name,
+      ...data
+    });
+    // TODO: Send request to backend here
   };
 
   const filteredUsers = users.filter((user) =>
@@ -73,10 +86,20 @@ export default function Home() {
                 </p>
               )}
             </div>
-            <button className="request-btn" onClick={handleRequest}>Request</button>
+            <button className="request-btn" onClick={() => handleRequestClick(user)}>
+              Request
+            </button>
           </div>
         ))}
       </div>
+
+      {/* Modal Component */}
+      <RequestPopup
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        user={selectedUser}
+        onSubmit={handleRequestSubmit}
+      />
     </div>
   );
 }
