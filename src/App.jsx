@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
+import Login from './Components/Login';
 import ProfileCard from './Components/ProfileCard';
+import Signup from './Components/Signup'; // 👈 Add this line
 
 function App() {
   return (
     <Routes>
-      {/* Default route shows ProfileCard since it's based on auth */}
+      <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<Signup />} /> {/* 👈 New Signup route */}
       <Route path="/profile" element={<ProfileCard />} />
-
-      {/* Add more routes here like /login or /dashboard if needed */}
-      <Route path="*" element={<div>Page not found</div>} />
     </Routes>
   );
 }
