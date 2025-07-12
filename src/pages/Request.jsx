@@ -1,11 +1,10 @@
-// src/pages/Request.jsx
 import React from 'react';
 
-export default function Request() {
+export default function RequestPage() {
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={{ padding: '20px' }}>
       <h2>Request Page</h2>
-      <p>This is a placeholder for sending a skill request.</p>
+      <p>You are now viewing the request page!</p>
     </div>
   );
 }

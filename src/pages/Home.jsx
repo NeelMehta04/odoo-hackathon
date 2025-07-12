@@ -8,6 +8,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Dummy data
     setUsers([
       {
         id: 1,
@@ -26,6 +27,15 @@ export default function Home() {
     ]);
   }, []);
 
+  const handleRequest = () => {
+    const isLoggedIn = localStorage.getItem('loggedIn');
+    if (isLoggedIn === 'true') {
+      navigate('/request');
+    } else {
+      navigate('/login');
+    }
+  };
+
   const filteredUsers = users.filter((user) =>
     user.name?.toLowerCase().includes(search.toLowerCase())
   );
@@ -33,8 +43,8 @@ export default function Home() {
   return (
     <div className="container">
       <div className="top-bar">
-        <div className="project-name">SkillConnect</div>
-        <div className="actions">
+        <div className="project-name">SkillMatcher</div>
+        <div className="right-controls">
           <input
             type="text"
             placeholder="Search by name..."
@@ -49,19 +59,21 @@ export default function Home() {
         {filteredUsers.length === 0 && <p className="empty">No users found</p>}
         {filteredUsers.map((user) => (
           <div key={user.id} className="user-card">
-            <div className="card-content">
+            <div className="user-info">
               <h2>{user.name}</h2>
               <p>{user.email}</p>
               {user.skillsOffered && (
-                <p><strong>Skills Offered:</strong> {user.skillsOffered.join(', ')}</p>
+                <p>
+                  <strong>Skills Offered:</strong> {user.skillsOffered.join(', ')}
+                </p>
               )}
               {user.skillsWanted && (
-                <p><strong>Skills Wanted:</strong> {user.skillsWanted.join(', ')}</p>
+                <p>
+                  <strong>Skills Wanted:</strong> {user.skillsWanted.join(', ')}
+                </p>
               )}
             </div>
-            <div className="card-action">
-              <button onClick={() => navigate('/request')}>Request</button>
-            </div>
+            <button className="request-btn" onClick={handleRequest}>Request</button>
           </div>
         ))}
       </div>
