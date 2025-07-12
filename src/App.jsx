@@ -1,16 +1,17 @@
-import { Routes, Route } from 'react-router-dom';
-import Login from './Components/Login';
-import ProfileCard from './Components/ProfileCard';
-import Signup from './Components/Signup'; // 👈 Add this line
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import Login from './Login';
+import RequestPage from './RequestPage';
 
-function App() {
+export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/signup" element={<Signup />} /> {/* 👈 New Signup route */}
-      <Route path="/profile" element={<ProfileCard />} />
-    </Routes>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/request" element={<RequestPage />} />
+      </Routes>
+    </Router>
   );
 }
-
-export default App;
